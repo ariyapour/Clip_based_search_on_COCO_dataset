@@ -2,8 +2,6 @@
 
 This repository demonstrates a simple image search demo using CLIP embeddings over the COCO validation 2014 images. It includes utilities to compute image embeddings, store matching image URLs, and a small Gradio web UI to query the dataset using natural language.
 
-This README documents the repository layout, the high-level architecture and dataflow, setup instructions (local / CPU / GPU), and quick examples of the main scripts.
-
 ## What this project contains
 
 - `data/captions_val2014.json` — COCO captions/annotations for the val2014 split (used to map filenames to coco URLs).
