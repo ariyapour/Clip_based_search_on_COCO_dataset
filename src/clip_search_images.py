@@ -2,16 +2,14 @@
 import numpy as np
 import torch
 import open_clip
-from PIL import Image
-import os
+from utils import load_split_model
 
 # Load embeddings and filenames
 image_embeddings = np.load("embeddings/image_coco_validation_2014_embeddings.npy")
-filenames = np.load("embeddings/image_coco_validation_2014_filenames.npy")
 file_urls = np.load("embeddings/image_coco_validation_2014_coco_urls.npy")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model, _, preprocess = open_clip.create_model_and_transforms('ViT-B-32', pretrained='openai')
+preprocess, model = load_split_model()
 tokenizer = open_clip.get_tokenizer('ViT-B-32')
 model.to(device)
 model.eval()

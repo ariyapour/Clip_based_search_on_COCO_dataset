@@ -1,16 +1,12 @@
 # src/app.py
 import gradio as gr
-from clip_search_images import search_images, get_image_path, search_images_by_url
+from clip_search_images import search_images_by_url
 from PIL import Image
 import requests
 from io import BytesIO
 
-def search_and_display(query):
-    results = search_images(query, top_k=5)
-    return [get_image_path(f) for f, _ in results]
-
 def search_by_url_and_display(query):
-    results = search_images_by_url(query, top_k=40)
+    results = search_images_by_url(query, top_k=10)
 
     return [fetch_image(url) for url, _ in results]
 

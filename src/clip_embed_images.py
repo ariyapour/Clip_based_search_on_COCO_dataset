@@ -3,6 +3,7 @@ from tqdm import tqdm
 from PIL import Image
 import numpy as np
 import open_clip
+from utils import load_split_model
 import torch
 import json
 import os
@@ -19,13 +20,9 @@ model_path = "models/clip-vit-b-32/models--timm--vit_base_patch32_clip_224.opena
 image_embeddings = []
 file_coco_urls = []
 
-#load clip-vit-b-32
-model_cache_dir = Path("models/clip-vit-b-32")
-model_cache_dir.mkdir(parents=True, exist_ok=True)
 #load clip model
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model, _, preprocess = open_clip.create_model_and_transforms('ViT-B-32', pretrained=None)
-model.load_state_dict(torch.load("models/clip-vit-b-32/clip-vit-b-32.pt"))
+preprocess, model = load_split_model()
 tokenizer = open_clip.get_tokenizer('ViT-B-32')
 model.to(device)
 model.eval()
