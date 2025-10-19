@@ -78,7 +78,6 @@ Open the local URL printed by Gradio in your browser, enter a query, and inspect
 
 ## Contribution ideas / next steps
 
-- Add a `requirements.txt` or `pyproject.toml` for reproducible installs.
 - Add argument parsing to `src/clip_embed_images.py` for input/output paths and batch sizes.
 - Add unit tests for `utils.load_split_model()` and `clip_search_images.search_images_by_url()`.
 
