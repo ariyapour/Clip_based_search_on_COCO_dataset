@@ -16,6 +16,8 @@ Users can then download the results as a ZIP file, which contains:
 
 This setup allows researchers and developers to quickly extract custom subsets of the COCO dataset for experimentation, fine-tuning, or other computer vision tasks based on semantic content rather than predefined categories.
 
+https://github.com/user-attachments/assets/8c1eaf9b-c8ef-4d41-80b9-79ec1048c0eb
+
 ## What this project contains
 
 - `data/captions_val2014.json` — COCO captions/annotations for the val2014 split (used to map filenames to coco URLs).
