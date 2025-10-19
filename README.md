@@ -1,11 +1,25 @@
 # CLIP-based Image Search on COCO (validation2014)
 
-This repository demonstrates a simple image search demo using CLIP embeddings over the COCO validation 2014 images. It includes utilities to compute image embeddings, store matching image URLs, and a small Gradio web UI to query the dataset using natural language.
+This application leverages CLIP embeddings of the COCO dataset to enable semantic image search using natural language queries. Users can enter a text query, and the app retrieves the most relevant images from the dataset.
+
+For each search, the application generates a filtered subset of the COCO dataset, including:
+
+- The selected images (displayed in a gallery)
+
+- Their corresponding COCO-style annotations
+
+Users can then download the results as a ZIP file, which contains:
+
+- An images/ directory with the retrieved images
+
+- An annotations/annotations.json file containing the annotations
+
+This setup allows researchers and developers to quickly extract custom subsets of the COCO dataset for experimentation, fine-tuning, or other computer vision tasks based on semantic content rather than predefined categories.
 
 ## What this project contains
 
 - `data/captions_val2014.json` — COCO captions/annotations for the val2014 split (used to map filenames to coco URLs).
-- `embeddings/` — binary .npy files produced by the embedding script: `image_coco_validation_2014_embeddings.npy` and `image_coco_validation_2014_coco_urls.npy`.
+- `embeddings/` — binary .npy files produced by the embedding script: `image_coco_validation_2014_embeddings.npy` and `image_coco_validation_2014_coco_urls.npy` and `embeddings/image_coco_validation_2014_filenames.npy`.
 - `models/` — possibly-split CLIP model parts (named `clip_model_part_aa`, ...). `src/utils.py` contains helpers to merge these into a single in-memory model.
 - `src/` — application source code:
   - `app.py` — Gradio UI to enter a text query, show a gallery of results and allow downloading selected images as a ZIP.
