@@ -15,7 +15,7 @@ with gr.Blocks() as demo:
     gr.Markdown("## CLIP Image Search for COCO Dataset.")
 
     query = gr.Textbox(label="Search Query", value="People cooking in a kitchen")
-    top_k = gr.Number(label="Number of Results", value=10, precision=0)  # user specifies top-k
+    top_k = gr.Number(label="Number of files to get", value=10, precision=0)  # user specifies top-k
     search_btn = gr.Button("🔍 Search")
 
     gallery = gr.Gallery(label="Top Matches", columns=5, show_label=True)
