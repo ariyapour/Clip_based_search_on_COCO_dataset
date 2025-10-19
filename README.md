@@ -41,43 +41,15 @@ https://github.com/user-attachments/assets/8c1eaf9b-c8ef-4d41-80b9-79ec1048c0eb
 
 Why the split-model code: The `models/` directory may contain a large pretrained CLIP model file that was split into multiple parts for storage/transfer. `src/utils.py` shows a simple approach that concatenates those parts in memory and loads the PyTorch state dict.
 
-## Quickstart (assumptions)
+## Quickstart 
 
-This project assumes you have a local copy of the COCO `val2014` images available (the embedding script expects a local image folder). It also expects either a saved CLIP model available in `models/` (possibly split into `clip_model_part_*`) or that you will use a local OpenCLIP model installation.
-
-1. (Optional) Install requirements. There is no pinned requirements file in the repo, but the code uses the following packages:
-
-	- Python 3.8+
-	- torch
-	- open_clip (or open_clip_torch / open_clip depending on your setup)
-	- numpy
-	- pillow
-	- gradio
-	- requests
-	- tqdm
-
-	Example pip install (adjust for your environment):
+Before using the app, make sure to install the requirements:
 
 ```bash
-pip install torch numpy pillow gradio requests tqdm git+https://github.com/mlfoundations/open_clip.git
+pip install -r requirements
 ```
 
-2. Prepare COCO images
-
-	- Download the COCO val2014 images and put them in a directory (example path: `/path/to/val2014`). The embedding script expects `image_dir` to point at that folder.
-
-3. Compute embeddings (CPU or GPU)
-
-	- Edit `src/clip_embed_images.py` and set `image_dir` to your local path and `model_path` if needed. Then run:
-
-```bash
-python src/clip_embed_images.py
-```
-
-	This produces `embeddings/image_coco_validation_2014_embeddings.npy` and `embeddings/image_coco_validation_2014_coco_urls.npy`.
-
-4. Run the Gradio demo
-
+To run the app:
 ```bash
 python src/app.py
 ```
