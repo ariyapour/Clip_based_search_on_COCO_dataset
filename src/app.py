@@ -20,8 +20,24 @@ with gr.Blocks() as demo:
 
     gallery = gr.Gallery(label="Top Matches", columns=5, show_label=True)
     urls_state = gr.State()
+    
+    gr.HTML("""
+    <style>
+    .small-download {
+        width: 100%;
+        
+        max-height: 250px;
+        height: 60px;
+    }
+    </style>
+    """)  # inject CSS at the top
 
-    download_file = gr.File(label="Download ZIP")
+    download_file = gr.File(
+        label="Download ZIP",
+        file_types=[".zip"],
+        elem_classes="small-download"
+    )
+    
     download_btn = gr.Button("⬇️ Download Selected subset of dataset with Annotations")
 
     # Connect search: returns images + urls_state
