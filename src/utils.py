@@ -1,7 +1,14 @@
+from urllib.parse import urlparse
+from io import BytesIO
+from PIL import Image
+import numpy as np
+import open_clip
+import requests
+import tempfile
+import zipfile
+import torch
 import os
 import io
-import torch
-import open_clip
 
 def merge_model_parts(model_path="models", output_file="clip-vit-b-32.pt", part_prefix="clip_model_part_"):
     parts = sorted([p for p in os.listdir('.') if p.startswith(part_prefix)])
@@ -30,3 +37,26 @@ def load_split_model(model_path="models", prefix="clip_model_part_"):
 
     print("Model loaded successfully from memory!")
     return preprocess, model
+
+def fetch_image(url):
+    response = requests.get(url, timeout=10)
+    return Image.open(BytesIO(response.content))
+
+def download_selected_images_as_zip(urls):
+    """Create a temporary ZIP with original filenames"""
+    if not urls:
+        return None
+    temp_dir = tempfile.mkdtemp()
+    zip_path = os.path.join(temp_dir, "images.zip")
+
+    with zipfile.ZipFile(zip_path, "w") as zf:
+        for url in urls:
+            try:
+                resp = requests.get(url, timeout=10)
+                if resp.status_code == 200:
+                    # Extract original filename from URL
+                    filename = os.path.basename(urlparse(url).path)
+                    zf.writestr(filename, resp.content)
+            except Exception as e:
+                print(f"Failed to download {url}: {e}")
+    return zip_path
