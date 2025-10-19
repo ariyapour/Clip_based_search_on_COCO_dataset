@@ -14,7 +14,7 @@ Users can then download the results as a ZIP file, which contains:
 
 - An annotations/annotations.json file containing the annotations
 
-This setup allows researchers and developers to quickly extract custom subsets of the COCO dataset for experimentation, fine-tuning, or other computer vision tasks based on semantic content rather than predefined categories.
+This setup allows researchers and developers to quickly extract custom subsets of the COCO dataset for experimentation, fine-tuning, or other computer vision tasks based on semantic content rather than predefined categories. All necessary files are included in the repository, so you don’t need to download the COCO dataset manually; the application fetches the images directly from their URLs on the internet.
 
 https://github.com/user-attachments/assets/8c1eaf9b-c8ef-4d41-80b9-79ec1048c0eb
 
