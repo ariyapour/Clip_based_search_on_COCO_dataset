@@ -1,5 +1,5 @@
 # src/app.py
-from utils import download_selected_images_as_zip
+from utils import download_selected_images_as_zip, download_images_with_annotations_as_zip
 from clip_search import CLIPSearch
 import gradio as gr
 
@@ -7,13 +7,14 @@ clip_engine = CLIPSearch()
 
 def search_by_url_and_display(query, top_k):
     """Return list of PIL Images from URLs"""
-    results = clip_engine.search_images_by_url(query, top_k=top_k)
-    return results
+    images, urls, top_k_indices  = clip_engine.search_images_by_url(query, top_k=top_k)
+    annotations = clip_engine.get_image_caption_annotations(top_k_indices)
+    return images, {"urls": urls, "annotations": annotations}
 
 with gr.Blocks() as demo:
     gr.Markdown("## CLIP Image Search for COCO Dataset.")
 
-    query = gr.Textbox(label="Search Query")
+    query = gr.Textbox(label="Search Query", value="People cooking in a kitchen")
     top_k = gr.Number(label="Number of Results", value=10, precision=0)  # user specifies top-k
     search_btn = gr.Button("🔍 Search")
 
@@ -21,7 +22,7 @@ with gr.Blocks() as demo:
     urls_state = gr.State()
 
     download_file = gr.File(label="Download ZIP")
-    download_btn = gr.Button("⬇️ Download Selected Images as ZIP")
+    download_btn = gr.Button("⬇️ Download Selected subset of dataset with Annotations")
 
     # Connect search: returns images + urls_state
     search_btn.click(
@@ -32,7 +33,10 @@ with gr.Blocks() as demo:
 
     # Connect download: returns temporary ZIP path
     download_btn.click(
-        fn=download_selected_images_as_zip,
+        fn=lambda state: download_images_with_annotations_as_zip(
+            urls=state.get("urls", []),
+            annotations_dict=state.get("annotations", {})
+        ),
         inputs=urls_state,
         outputs=download_file
     )

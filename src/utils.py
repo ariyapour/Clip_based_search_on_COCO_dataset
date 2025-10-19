@@ -7,6 +7,7 @@ import requests
 import tempfile
 import zipfile
 import torch
+import json
 import os
 import io
 
@@ -59,4 +60,35 @@ def download_selected_images_as_zip(urls):
                     zf.writestr(filename, resp.content)
             except Exception as e:
                 print(f"Failed to download {url}: {e}")
+    return zip_path
+
+
+def download_images_with_annotations_as_zip(urls, annotations_dict):
+    """
+    Create a temporary ZIP with:
+    - images/ directory containing downloaded images
+    - annotations/annotations.json containing the passed dictionary
+    """
+    if not urls:
+        return None
+
+    temp_dir = tempfile.mkdtemp()
+    zip_path = os.path.join(temp_dir, "images_with_annotations.zip")
+
+    with zipfile.ZipFile(zip_path, "w") as zf:
+        # Add images
+        for url in urls:
+            try:
+                resp = requests.get(url, timeout=10)
+                if resp.status_code == 200:
+                    filename = os.path.basename(urlparse(url).path)
+                    # Write into "images/" directory inside ZIP
+                    zf.writestr(f"images/{filename}", resp.content)
+            except Exception as e:
+                print(f"Failed to download {url}: {e}")
+
+        # Add annotations.json inside "annotations/" directory
+        annotations_json = json.dumps(annotations_dict, indent=2)
+        zf.writestr("annotations/annotations.json", annotations_json)
+
     return zip_path
