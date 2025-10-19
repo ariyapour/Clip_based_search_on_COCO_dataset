@@ -80,5 +80,3 @@ Open the local URL printed by Gradio in your browser, enter a query, and inspect
 
 - Add argument parsing to `src/clip_embed_images.py` for input/output paths and batch sizes.
 - Add unit tests for `utils.load_split_model()` and `clip_search_images.search_images_by_url()`.
-
-If any details (preferred install method, specific model checkpoints, or CI/test commands) are missing, tell me and I can add them to this README.
